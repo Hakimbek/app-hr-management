@@ -1,6 +1,7 @@
 package uz.pdp.apphemanagement.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import uz.pdp.apphemanagement.entity.User;
 
 import java.util.Optional;

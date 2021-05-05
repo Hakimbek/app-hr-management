@@ -27,10 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtFilter jwtFilter;
 
+
+    // configure HttpSecurity
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .httpBasic().disable()
                 .authorizeRequests()
                 .antMatchers("/api/auth/register", "/api/auth/login", "/api/auth/verifyAccount").permitAll()
                 .anyRequest().authenticated();
@@ -38,6 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
+
+    // configure AuthenticationManager
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(authService).passwordEncoder(passwordEncoder());
@@ -60,18 +65,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     // send message to user email
-//    @Bean
-//    public JavaMailSender javaMailSender() {
-//        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-//        javaMailSender.setHost("smtp.gmail.com");
-//        javaMailSender.setPort(587);
-//        javaMailSender.setUsername("company.hr.manage@gmail.com");
-//        javaMailSender.setPassword("company123manage");
-//        Properties properties = javaMailSender.getJavaMailProperties();
-//        properties.put("mail.transport.protocol", "smtp");
-//        properties.put("mail.smtp.auth", "true");
-//        properties.put("mail.smtp.starttls.enable", "true");
-//        properties.put("mail.debug", "true");
-//        return javaMailSender;
-//    }
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+        javaMailSender.setHost("smtp.gmail.com");
+        javaMailSender.setPort(587);
+        javaMailSender.setUsername("email.sender.hr@gmail.com");
+        javaMailSender.setPassword("90D080JA");
+        Properties properties = javaMailSender.getJavaMailProperties();
+        properties.put("mail.transport.protocol", "smtp");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.debug", "true");
+        return javaMailSender;
+    }
 }

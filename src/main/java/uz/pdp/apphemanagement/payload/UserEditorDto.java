@@ -2,12 +2,11 @@ package uz.pdp.apphemanagement.payload;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
-public class SignUpDto {
+public class UserEditorDto {
     @NotNull
     @Size(min = 3, max = 50)
     private String firstName; // user firstName
@@ -17,12 +16,10 @@ public class SignUpDto {
     private String lastName; // user lastName
 
     @NotNull
-    @Email
-    private String email; // user email
-
-    @NotNull
     @Size(min = 8)
     private String password; // user password
 
-    private Integer roleId; // user role
+    private Double salary;
+
+    private Integer roleId;
 }

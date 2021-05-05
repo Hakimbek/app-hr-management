@@ -34,6 +34,8 @@ public class User implements UserDetails {
 
     private String emailCode; // user's email code
 
+    private Double salary; // user's salary
+
     @Column(nullable = false)
     private String password; // user's password
 
