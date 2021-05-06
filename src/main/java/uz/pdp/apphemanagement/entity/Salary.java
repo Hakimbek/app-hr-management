@@ -20,6 +20,7 @@ public class Salary {
     @Column(nullable = false)
     private Double salary;
 
+    @Column(nullable = false, updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
 

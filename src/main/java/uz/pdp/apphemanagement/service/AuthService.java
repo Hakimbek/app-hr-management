@@ -53,10 +53,10 @@ public class AuthService implements UserDetailsService {
      * REGISTER USERS IN THE SYSTEM
      *
      * @param registerDto firstName(String),
-     *                  lastName(String),
-     *                  email(String),
-     *                  password(String),
-     *                  roleId(Integer)
+     *                    lastName(String),
+     *                    email(String),
+     *                    password(String),
+     *                    roleId(Integer)
      * @return ApiResponse in ResponseEntity
      */
     public ApiResponse register(RegisterDto registerDto) {
@@ -161,8 +161,8 @@ public class AuthService implements UserDetailsService {
     /**
      * VERIFY USER ACCOUNT
      *
-     * @param emailCode String
-     * @param email String
+     * @param emailCode   String
+     * @param email       String
      * @param loginDtoDto email(String),
      *                    password(String)
      * @return ApiResponse in ResponseEntity
@@ -223,14 +223,16 @@ public class AuthService implements UserDetailsService {
      * @return ApiResponse in ResponseEntity
      */
     public ApiResponse edit(UserEditorDto userEditorDto) {
-        try {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            user.setFirstName(userEditorDto.getFirstName());
-            user.setLastName(userEditorDto.getLastName());
-            user.setPassword(passwordEncoder.encode(userEditorDto.getPassword()));
-            userRepository.save(user);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> optionalUser = userRepository.findById(user.getId());
+        if (optionalUser.isPresent()) {
+            User editedUser = optionalUser.get();
+            editedUser.setFirstName(userEditorDto.getFirstName());
+            editedUser.setLastName(userEditorDto.getLastName());
+            editedUser.setPassword(passwordEncoder.encode(userEditorDto.getPassword()));
+            userRepository.save(editedUser);
             return new ApiResponse("Successfully edited", true);
-        } catch (Exception e) {
+        } else {
             return new ApiResponse("Error", false);
         }
     }
